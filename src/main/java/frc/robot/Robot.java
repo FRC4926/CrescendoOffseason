@@ -255,6 +255,8 @@ public class Robot extends TimedRobot {
 
     // }
     Subsystems.m_climberSubsystem.climber.setIdleMode(IdleMode.kBrake);
+    
+    SmartDashboard.putNumber("Arm Encoder", Subsystems.m_armSubsystem.armMotor.getEncoder().getPosition()*180.0/Math.PI);
     // SmartDashboard.putNumber("Climber Encoder", Subsystems.m_climberSubsystem.climber.getEncoder().getPosition());
     // SmartDashboard.putNumber("Input Voltage", Subsystems.m_armSubsystem.ff.calculate(0, 1));
     // SmartDashboard.putNumber("PID", Subsystems.m_armSubsystem.armController.calculate(Subsystems.m_armSubsystem.armMotor.getEncoder().getPosition(), 0));

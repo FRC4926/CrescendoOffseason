@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.proto.Controller;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +16,7 @@ import frc.robot.RobotContainer.Subsystems;
 
 public class ArmTestCommand extends Command {
   public double angle = 0;
+  //Timer timer = new Timer();
   /** Creates a new ArmTestCommand. */
   public ArmTestCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -53,7 +55,7 @@ public class ArmTestCommand extends Command {
       //   Subsystems.m_armSubsystem.armMotor.set(0);
       // }
     }else if(Controllers.m_driverController.getXButton()){
-      Subsystems.m_armSubsystem.goToSpecifiedAngleAmp(-0.5);
+      Subsystems.m_armSubsystem.goToSpecifiedAngleAmp(-.5);
     } 
     else if (Controllers.m_operatorController.getBButton()) {
     //   if(Subsystems.m_armSubsystem.getAngle(Subsystems.m_limelightSubsystem.calcVerticalDistance())==-35.9){

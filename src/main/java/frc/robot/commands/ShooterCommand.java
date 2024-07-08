@@ -40,7 +40,7 @@ public class ShooterCommand extends Command {
   @Override
   public void execute() {
     SmartDashboard.putNumber("Distance Sensor Voltage", Subsystems.m_shooterSubsystem.distanceSensor.getVoltage());
-    //SmartDashboard.putBoolean("Distance Sensor Passed", Subsystems.m_shooterSubsystem.getPassed());
+    SmartDashboard.putBoolean("Override", Subsystems.m_shooterSubsystem.getOverride());
 
     //Rumble the operator controller when the target RPM is reached
     
@@ -71,7 +71,7 @@ public class ShooterCommand extends Command {
     }
 
     //Override the color sensor for full operator control
-    if(Controllers.m_operatorController.getStartButton()){
+    if(Controllers.m_operatorController.getStartButtonReleased()){
       Subsystems.m_shooterSubsystem.setOverride(!Subsystems.m_shooterSubsystem.getOverride());
 
       //reset has passed in case you are switching back into override mode
@@ -98,9 +98,10 @@ public class ShooterCommand extends Command {
         Subsystems.m_shooterSubsystem.fullSend();
       }
     } else {
-      //if(!Subsystems.m_shooterSubsystem.getOverride()){
-        // if it's in overide, don't rev at steady state
-        Subsystems.m_shooterSubsystem.RPMShoot(Constants.Robot.SteadySpeedRPM+500, Constants.Robot.SteadySpeedRPM+500);
+      //Subsystems.m_shooterSubsystem.RPMShoot(0, 0);
+      // if(!Subsystems.m_shooterSubsystem.getOverride()){
+      //   //if it's in overide, don't rev at steady state
+      Subsystems.m_shooterSubsystem.RPMShoot(Constants.Robot.SteadySpeedRPM+500, Constants.Robot.SteadySpeedRPM+500);
       
       
     }
@@ -126,21 +127,28 @@ public class ShooterCommand extends Command {
       {
         if (!Subsystems.m_shooterSubsystem.getPassed())
           {
-            // Subsystems.m_shooterSubsystem.intake(Constants.Robot.intakeEffort);
+            // Subsystems.m_shooterSubsystem.intake(Constants.Robot.autonIntakeEffort);
             // Subsystems.m_shooterSubsystem.convey(Constants.Robot.conveyorEffort);
             if(Subsystems.m_shooterSubsystem.startStage()){
               Subsystems.m_shooterSubsystem.intake(-0.5);
               Subsystems.m_shooterSubsystem.convey(0.45);
             }else{
                Subsystems.m_shooterSubsystem.intake(Constants.Robot.autonIntakeEffort);
-            Subsystems.m_shooterSubsystem.convey(Constants.Robot.conveyorEffort);
+              Subsystems.m_shooterSubsystem.convey(Constants.Robot.conveyorEffort);
             }
            
           }
           else 
           {
-            Subsystems.m_shooterSubsystem.intake(0);
-            Subsystems.m_shooterSubsystem.convey(0);
+            if (Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() > 2.6)
+            {
+              Subsystems.m_shooterSubsystem.intake(0);
+              Subsystems.m_shooterSubsystem.convey(-0.1);
+
+            } else {
+              Subsystems.m_shooterSubsystem.intake(0);
+              Subsystems.m_shooterSubsystem.convey(0);
+            }
           }
       }
       else 

@@ -81,7 +81,7 @@ public final class Constants {
     public final static double limelightHeight = 21.2;
     public final static double limelightAngle = 26;
     public final static double initialShoulderAngle = -28.5; //Check
-    public final static double shoulderGearRatio = 1.0/100.0; //Check
+    public final static double shoulderGearRatio = 1.0/98.90909; //Check
     public final static double ampAngle = 95; //Check
     public final static double climberMaxEncoderPosition = -370;
     //public final static double shooterP = .1;

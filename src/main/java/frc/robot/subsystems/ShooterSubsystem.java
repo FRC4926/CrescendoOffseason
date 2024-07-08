@@ -184,7 +184,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean distanceSensorTriggered()
   {
-    return distanceSensor.getAverageVoltage()>0.75;
+    return distanceSensor.getAverageVoltage()>0.75; //0.75
   }
 
   public boolean startStage(){
