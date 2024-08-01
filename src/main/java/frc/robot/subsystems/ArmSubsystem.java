@@ -127,7 +127,7 @@ public class ArmSubsystem extends SubsystemBase {
       armMotor.set(-0.3);
     }
     else if(armMotor.getEncoder().getPosition()*180/Math.PI>-20){
-      armMotor.set(-.1);
+      armMotor.set(-0.1);
     }else{
       armMotor.set(0);
     }

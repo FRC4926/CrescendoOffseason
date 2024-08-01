@@ -131,7 +131,7 @@ public class ShooterCommand extends Command {
             // Subsystems.m_shooterSubsystem.convey(Constants.Robot.conveyorEffort);
             if(Subsystems.m_shooterSubsystem.startStage()){
               Subsystems.m_shooterSubsystem.intake(-0.5);
-              Subsystems.m_shooterSubsystem.convey(0.45);
+              Subsystems.m_shooterSubsystem.convey(0.1);
             }else{
                Subsystems.m_shooterSubsystem.intake(Constants.Robot.autonIntakeEffort);
               Subsystems.m_shooterSubsystem.convey(Constants.Robot.conveyorEffort);
@@ -140,12 +140,15 @@ public class ShooterCommand extends Command {
           }
           else 
           {
-            if (Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() > 2.6)
+            if (Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() > 2)
             {
-              Subsystems.m_shooterSubsystem.intake(0);
-              Subsystems.m_shooterSubsystem.convey(-0.1);
+              System.out.println("here1");
 
-            } else {
+              Subsystems.m_shooterSubsystem.intake(0);
+              Subsystems.m_shooterSubsystem.convey(-0.05);
+
+            } else if(Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() <= 2){
+              System.out.println("here");
               Subsystems.m_shooterSubsystem.intake(0);
               Subsystems.m_shooterSubsystem.convey(0);
             }

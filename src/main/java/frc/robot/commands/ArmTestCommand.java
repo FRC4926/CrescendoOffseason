@@ -32,6 +32,12 @@ public class ArmTestCommand extends Command {
   @Override
   public void execute() {
 
+    
+
+
+    SmartDashboard.putNumber("AngleArm", Subsystems.m_armSubsystem.getAngle(Subsystems.m_limelightSubsystem.calcVerticalDistance()));
+    SmartDashboard.putNumber("ActualAngle", Subsystems.m_armSubsystem.armMotor.getEncoder().getPosition());
+
   if (Constants.Robot.SteadySpeedRPM <= 1500)
   {
     Controllers.m_operatorController.setRumble(RumbleType.kBothRumble, 0.5);
@@ -69,8 +75,11 @@ public class ArmTestCommand extends Command {
       }else{
         Constants.Robot.SteadySpeedRPM = 2500;
       }
+      
       if(!(Subsystems.m_limelightSubsystem.getY()==0)){
         angle = Subsystems.m_armSubsystem.getAngle(Subsystems.m_limelightSubsystem.calcVerticalDistance());
+        //.m_armSubsystem.goToSpecifiedAngle(5);
+
         Subsystems.m_armSubsystem.goToSpecifiedAngle(.5+Subsystems.m_armSubsystem.getAngle(Subsystems.m_limelightSubsystem.calcVerticalDistance()));
       }else{
         Subsystems.m_armSubsystem.goToSpecifiedAngle(angle);
