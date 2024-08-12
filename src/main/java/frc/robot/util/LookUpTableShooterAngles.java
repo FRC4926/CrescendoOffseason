@@ -35,6 +35,21 @@ public class LookUpTableShooterAngles {
     }
 
 
+    // This uses a regression of the original LUT, that I made with Desmos
+    // For more information, look at https://www.desmos.com/calculator/egj3vqmti1
+    // public double getAngle(double distance) {
+    //     double
+    //         a = -1.69243,
+    //         b = -0.0160853,
+    //         c = 3.59561,
+    //         d = 0.138895,
+    //         f = 0.998668,
+    //         g = -35.9521,
+    //         h = 0.0140762,
+    //         i = 7.86851;
+        
+    //     return a*Math.exp(b*distance + c) + d*Math.log(f*distance + g) + h*distance + i;
+    // }
 
     public double getAngle(double distance){
 

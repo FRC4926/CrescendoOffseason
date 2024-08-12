@@ -31,6 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
   //public PIDController  betterController = new PIDController(0.0012,0.00015,0);
   private PIDController  lowerMotorPIDController = new PIDController(0.01,0,0);
   private PIDController  upperMotorPIDController = new PIDController(.01,0,0);
+
   //SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(-0.73956, 0, 0);
   private boolean hasPassed = false;
   public double targetRPM = 3000;

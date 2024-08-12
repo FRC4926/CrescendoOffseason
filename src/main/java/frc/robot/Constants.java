@@ -64,7 +64,7 @@ public final class Constants {
     public static final int shooterTolerance = 30;
     public static final double autonIntakeEffort = -0.5;
     public static final double intakeEffort = -0.5;
-    public static final double conveyorEffort = .5;
+    public static final double conveyorEffort = .8;
     public static final double ksVolts = 0;//0.18597; // //// //0.29328;  
     public static final double kaVoltSecondsSquaredPerMeter = 0;
     public static final double kvVoltSecondsPerMeter =2.5656; //2.2846;// //2.17882;

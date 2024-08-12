@@ -8,6 +8,7 @@ package frc.robot.commands;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,10 +24,15 @@ public class ShooterCommand extends Command {
   /** Creates a new ShooterCommand. */
 
   Timer rumble = new Timer();
-
+  private double destPos = 0;
+  private PIDController  conveyorPIDController = new PIDController(.01,0,0);
 
   public ShooterCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
+    SmartDashboard.putNumber("among", 0);
+    SmartDashboard.putNumber("cpid", 0);
+
+    SmartDashboard.putBoolean("passed", false);
   }
 
   // Called when the command is initially scheduled.
@@ -47,6 +53,10 @@ public class ShooterCommand extends Command {
 
     if(Subsystems.m_shooterSubsystem.distanceSensorTriggered()){
         Subsystems.m_shooterSubsystem.changePassed(true);
+        SmartDashboard.putBoolean("passed", true);
+        
+        destPos = Subsystems.m_shooterSubsystem.conveyerMotor.getEncoder().getPosition();
+        conveyorPIDController.reset();
     }
     // if(RobotContainer.Controllers.m_operatorController.getRightY()>.2){
     //   Subsystems.m_shooterSubsystem.intake(Constants.Robot.intakeEffort);
@@ -131,27 +141,32 @@ public class ShooterCommand extends Command {
             // Subsystems.m_shooterSubsystem.convey(Constants.Robot.conveyorEffort);
             if(Subsystems.m_shooterSubsystem.startStage()){
               Subsystems.m_shooterSubsystem.intake(-0.5);
-              Subsystems.m_shooterSubsystem.convey(0.1);
+              Subsystems.m_shooterSubsystem.convey(0.3);
             }else{
                Subsystems.m_shooterSubsystem.intake(Constants.Robot.autonIntakeEffort);
               Subsystems.m_shooterSubsystem.convey(Constants.Robot.conveyorEffort);
             }
            
           }
-          else 
+          else
           {
-            if (Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() > 2)
-            {
-              System.out.println("here1");
+            //Subsystems.m_shooterSubsystem.intake(0);
+            double cpid = conveyorPIDController.calculate(
+              Subsystems.m_shooterSubsystem.conveyerMotor.getEncoder().getPosition(), destPos
+            );
+            SmartDashboard.putNumber("cpid", cpid);
+            Subsystems.m_shooterSubsystem.convey(cpid);
+            // SmartDashboard.putNumber("among", SmartDashboard.getNumber("among", 0) + 1);
+            // if (Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() > 2.3)
+            // {
+            //   Subsystems.m_shooterSubsystem.intake(0);
+            //   Subsystems.m_shooterSubsystem.convey(-0.05);
 
-              Subsystems.m_shooterSubsystem.intake(0);
-              Subsystems.m_shooterSubsystem.convey(-0.05);
 
-            } else if(Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() <= 2){
-              System.out.println("here");
-              Subsystems.m_shooterSubsystem.intake(0);
-              Subsystems.m_shooterSubsystem.convey(0);
-            }
+            // } else if(Subsystems.m_shooterSubsystem.distanceSensor.getAverageVoltage() <= 2.3){
+            //   Subsystems.m_shooterSubsystem.intake(0);
+            //   Subsystems.m_shooterSubsystem.convey(0);
+            // }
           }
       }
       else 
